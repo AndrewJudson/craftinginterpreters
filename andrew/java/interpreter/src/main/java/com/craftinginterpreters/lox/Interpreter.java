@@ -72,6 +72,10 @@ class Interpreter implements Expr.Visitor<Object> {
         checkNumberOperands(expr.operator, left, right);
         return (double)left - (double)right;
       case PLUS:
+        if (left instanceof String || right instanceof String) {
+          return left.toString() + right.toString();
+        }
+
         if (left instanceof Double && right instanceof Double) {
           return (double)left + (double)right;
         }
@@ -83,6 +87,8 @@ class Interpreter implements Expr.Visitor<Object> {
             "Operands must be two numbers or two strings.");
       case SLASH:
         checkNumberOperands(expr.operator, left, right);
+        if ((Double) right == 0.0) throw new RuntimeError(expr.operator,
+            "No division by zero");
         return (double)left / (double)right;
       case STAR:
         checkNumberOperands(expr.operator, left, right);
