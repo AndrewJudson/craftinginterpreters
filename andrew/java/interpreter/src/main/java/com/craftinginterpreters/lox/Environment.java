@@ -3,6 +3,8 @@ package com.craftinginterpreters.lox;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.craftinginterpreters.lox.Interpreter.UNDEFINED;
+
 class Environment {
   final Environment enclosing;
   private final Map<String, Object> values = new HashMap<>();
@@ -17,6 +19,11 @@ class Environment {
 
   Object get(Token name) {
     if (values.containsKey(name.lexeme)) {
+      var value = values.get(name.lexeme);
+      if (value.equals(UNDEFINED)) {
+        throw new RuntimeError(name,
+            "Variable has not been assigned to '" + name.lexeme + "'.");
+      }
       return values.get(name.lexeme);
     }
 

@@ -7,7 +7,7 @@ import static com.craftinginterpreters.lox.Lox.report;
 import static com.craftinginterpreters.lox.TokenType.*;
 
 class Parser {
-  private static class ParseError extends RuntimeException {}
+  public static class ParseError extends RuntimeException {}
   private final List<Token> tokens;
   private int current = 0;
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 class Interpreter implements Expr.Visitor<Object>,
     Stmt.Visitor<Void> {
+  public static final String UNDEFINED = "UNDEFINED"; // should use enum but I'm lazy
   private Environment environment = new Environment();
   @Override
   public Object visitLiteralExpr(Expr.Literal expr) {
@@ -68,7 +69,7 @@ class Interpreter implements Expr.Visitor<Object>,
 
   @Override
   public Void visitVarStmt(Stmt.Var stmt) {
-    Object value = null;
+    Object value = UNDEFINED;
     if (stmt.initializer != null) {
       value = evaluate(stmt.initializer);
     }
